@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>ExaWeb - Examen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  <style>
+    body {
+      background-image: url('https://www.dropbox.com/scl/fi/lki8ya9jqvcy4lg803lky/lecture-hall-1.jpeg?rlkey=20ntzdxn19p9qqs007ivf33de&st=6ubq4saj&raw=1');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .bg-overlay {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 1rem;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-xl bg-overlay shadow-lg">
+      <h1 class="text-2xl font-bold text-center text-blue-700 mb-6">Examen QCM - JavaScript</h1>
+      <div id="quiz-container">
+        <div id="question-container" class="mb-4">
+          <div id="question-text" class="font-semibold text-gray-800 mb-2">Chargement...</div>
+          <div id="choices-container" class="space-y-2"></div>
+        </div>
+        <div class="flex justify-between items-center mb-4">
+          <div id="timer" class="text-blue-700 font-bold">
+            <i class="fas fa-clock"></i> <span id="time">00:30</span>
+          </div>
+          <button id="next-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 transition">Suivant</button>
+        </div>
+      </div>
+      <div id="result-container" class="hidden text-center">
+        <h2 class="text-xl font-bold text-green-600 mb-4">Résultat</h2>
+        <p class="mb-2">Score : <span id="score">0</span> / <span id="total">0</span></p>
+        <button onclick="location.href='index.html'" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800">Recommencer</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Quel mot-clé permet de déclarer une variable en JavaScript ?",
+        choices: ["int", "let", "var", "float"],
+        correct: [1, 2]
+      },
+      {
+        question: "Quel est le résultat de typeof [] ?",
+        choices: ["'object'", "'array'", "'list'", "'undefined'"],
+        correct: [0]
+      },
+      {
+        question: "Quelle méthode est utilisée pour ajouter un élément à la fin d’un tableau ?",
+        choices: ["push()", "pop()", "unshift()", "append()"],
+        correct: [0]
+      },
+      {
+        question: "Quel symbole est utilisé pour les fonctions fléchées ?",
+        choices: ["=>", "->", "::", "==>"],
+        correct: [0]
+      },
+      {
+        question: "Comment accéder à un élément HTML avec l’ID 'main' ?",
+        choices: [
+          "document.getElement('main')",
+          "document.querySelector('#main')",
+          "document.getElementById('main')",
+          "document.main"
+        ],
+        correct: [1, 2]
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let timer;
+    let timeLeft = 30;
+
+    const questionText = document.getElementById("question-text");
+    const choicesContainer = document.getElementById("choices-container");
+    const nextBtn = document.getElementById("next-btn");
+    const timerDisplay = document.getElementById("time");
+
+    function showQuestion() {
+      clearInterval(timer);
+      timeLeft = 30;
+      startTimer();
+      const q = questions[currentQuestion];
+      questionText.textContent = q.question;
+      choicesContainer.innerHTML = "";
+      q.choices.forEach((choice, index) => {
+        const label = document.createElement("label");
+        label.className = "flex items-center space-x-2";
+        label.innerHTML = `
+          <input type="checkbox" value="${index}" class="form-checkbox h-5 w-5 text-blue-600">
+          <span>${choice}</span>
+        `;
+        choicesContainer.appendChild(label);
+      });
+    }
+
+    function startTimer() {
+      timerDisplay.textContent = "00:30";
+      timer = setInterval(() => {
+        timeLeft--;
+        const seconds = String(timeLeft % 60).padStart(2, '0');
+        timerDisplay.textContent = `00:${seconds}`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          nextBtn.click();
+        }
+      }, 1000);
+    }
+
+    nextBtn.addEventListener("click", () => {
+      const selected = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(c => parseInt(c.value));
+      const correctAnswers = questions[currentQuestion].correct;
+      if (selected.length === correctAnswers.length && selected.every(val => correctAnswers.includes(val))) {
+        score++;
+      }
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        document.getElementById("quiz-container").classList.add("hidden");
+        document.getElementById("result-container").classList.remove("hidden");
+        document.getElementById("score").textContent = score;
+        document.getElementById("total").textContent = questions.length;
+      }
+    });
+
+    showQuestion();
+  </script>
+</body>
+</html>
