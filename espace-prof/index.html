@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ExaWeb - Espace Étudiant</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('https://www.dropbox.com/scl/fi/lki8ya9jqvcy4lg803lky/lecture-hall-1.jpeg?raw=1') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0056b3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #003d80;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bienvenue sur ExaWeb</h1>
+    <p>Entrez le code d'examen ci-dessous :</p>
+    <input type="text" id="exam-code" placeholder="ex: ABC123">
+    <button onclick="startExam()">Accéder à l'examen</button>
+  </div>
+
+  <script>
+    function startExam() {
+      const code = document.getElementById("exam-code").value.trim();
+      if (code) {
+        window.location.href = `qcm.html?examId=${encodeURIComponent(code)}`;
+      } else {
+        alert("Veuillez entrer un code d'examen.");
+      }
+    }
+  </script>
+</body>
+</html>

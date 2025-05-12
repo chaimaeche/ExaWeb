@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examen</title>
+  <style>
+    body {
+      background: url('https://www.dropbox.com/scl/fi/lki8ya9jqvcy4lg803lky/lecture-hall-1.jpeg?raw=1') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      background-color: rgba(255,255,255,0.95);
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 30px;
+      border-radius: 10px;
+    }
+    button {
+      background-color: #0056b3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #003d80;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Examen en cours</h1>
+    <p id="examInfo"></p>
+    <p>📌 Exemple de contenu QCM ici...</p>
+    <button onclick="finishExam()">Terminer l'examen</button>
+  </div>
+
+  <script>
+    const examId = new URLSearchParams(window.location.search).get("examId");
+    document.getElementById("examInfo").innerText = "Code de l'examen : " + examId;
+
+    function finishExam() {
+      window.location.href = `resume.html?examId=${encodeURIComponent(examId)}`;
+    }
+  </script>
+</body>
+</html>
