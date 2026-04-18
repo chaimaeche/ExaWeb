@@ -42,4 +42,26 @@ class AuthController extends Controller
             'user' => $user
         ], 201);
     }
+    public function login(Request $request)
+    {
+        // 1. كنتأكدو أن المستخدم دخل الإيميل والمودپاس
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        // 2. كنقلبو على المستخدم فـ قاعدة البيانات بهاد الإيميل
+        $user = User::where('email', $request->email)->first();
+
+        // 3. كنتحققو واش المستخدم كاين، واش المودپاس صحيح
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Email ou mot de passe incorrect'], 401);
+        }
+
+        // 4. إيلا كان كلشي صحيح، كنرجعو رسالة النجاح والمعلومات ديالو
+        return response()->json([
+            'message' => 'Connexion réussie !',
+            'user' => $user
+        ], 200);
+    }
 }

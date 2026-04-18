@@ -43,4 +43,50 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('Server connection error (make sure Laravel is running).');
         });
     });
+    const loginForm = document.getElementById("loginForm");
+
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent page refresh
+
+    // 1. Collect email and password
+    let loginData = {
+        email: document.getElementById('login-email').value,
+        password: document.getElementById('login-password').value
+    };
+
+    // 2. Send data to Laravel API
+    fetch('http://localhost:8000/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(loginData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // 3. Check server response
+        if (data.message === 'Connexion réussie !') {
+            alert('Welcome! Login successful. 🎓');
+            console.log(data.user);
+            
+            // Redirect user based on role (student or teacher)
+            if (data.user.role === 'etudiant') {
+                // window.location.href = "espace-etu/index.html";
+                alert("Redirecting to student space...");
+            } else if (data.user.role === 'enseignant') {
+                // window.location.href = "espace-prof/index.html";
+                alert("Redirecting to teacher space...");
+            }
+            
+        } else {
+            alert('Invalid email or password. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Server connection error.');
+    });
+});
+
 });
