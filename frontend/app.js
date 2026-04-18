@@ -67,21 +67,21 @@ loginForm.addEventListener('submit', function(e) {
     .then(data => {
         // 3. Check server response
         if (data.message === 'Connexion réussie !') {
-            alert('Welcome! Login successful. 🎓');
-            console.log(data.user);
-            
-            // Redirect user based on role (student or teacher)
-            if (data.user.role === 'etudiant') {
-                // window.location.href = "espace-etu/index.html";
-                alert("Redirecting to student space...");
-            } else if (data.user.role === 'enseignant') {
-                // window.location.href = "espace-prof/index.html";
-                alert("Redirecting to teacher space...");
-            }
-            
-        } else {
-            alert('Invalid email or password. Please try again.');
-        }
+    alert('Welcome! Login successful. 🎓');
+    console.log(data.user);
+    
+    // Redirect user based on their role (student or teacher)
+    if (data.user.role === 'etudiant') {
+        // Go back one folder and redirect to student space
+        window.location.href = "../espace-etu/index.html"; 
+    } else if (data.user.role === 'enseignant') {
+        // Go back one folder and redirect to teacher space
+        window.location.href = "../espace-prof/index.html";
+    }
+    
+} else {
+    alert('Invalid email or password. Please try again.');
+}
     })
     .catch(error => {
         console.error('Error:', error);
