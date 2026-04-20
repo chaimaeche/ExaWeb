@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>ExaWeb - Espace Étudiant</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background-image: url('https://www.dropbox.com/scl/fi/lki8ya9jqvcy4lg803lky/lecture-hall-1.jpeg?rlkey=20ntzdxn19p9qqs007ivf33de&st=6ubq4saj&raw=1');
+      background-image: url('https://www.dropbox.com/scl/fi/lki8ya9jqvcy4lg803lky/lecture-hall-1.jpeg?raw=1');
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
     }
     .bg-overlay {
       background-color: rgba(255, 255, 255, 0.95);
@@ -20,40 +17,28 @@
     }
   </style>
 </head>
-<body>
-  <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-overlay max-w-3xl w-full shadow-xl flex items-center">
-      <div class="w-1/2 hidden md:block">
-        <img src="https://www.dropbox.com/scl/fi/8mvkr1xznin4r5v4do7s6/student-man-making-ok-sign.png?rlkey=a0q9pamj32dtyl80r6ryn3u43&raw=1"
-             alt="Étudiant" class="rounded-lg shadow-xl w-full">
-      </div>
-      <div class="w-full md:w-1/2 px-6">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">ExaWeb</h1>
-        <p class="text-center text-gray-600 mb-6">Veuillez entrer le lien ou code d'examen puis cliquez sur Accéder</p>
-
-         
-        <input type="text" id="exam-code" placeholder="ex: abc123" class="w-full border p-2 rounded mb-4">
-
-         
-        <button onclick="redirectToExam()" class="w-full bg-blue-600 text-white py-3 rounded-lg text-center font-semibold hover:bg-blue-800 transition">
-          <i class="fas fa-link mr-2"></i> Accéder à l'examen
-        </button>
-
-        <div id="error-message" class="text-red-600 text-sm mt-2 hidden">
-          Veuillez entrer un code d'examen valide.
-        </div>
-      </div>
-    </div>
+<body class="min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md bg-overlay shadow-lg text-center">
+    <h1 class="text-2xl font-bold text-blue-700 mb-4">Espace Étudiant</h1>
+    <p class="mb-6 text-gray-700">Entrez le code d'examen fourni par votre professeur :</p>
+    
+    <input type="text" id="exam-code" placeholder="ex: XV5BWW" class="w-full p-3 mb-4 border rounded text-center font-bold tracking-widest uppercase text-xl">
+    
+    <button onclick="startExam()" class="bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-800 w-full font-bold text-lg transition">
+      Accéder à l'examen
+    </button>
   </div>
 
   <script>
-    function redirectToExam() {
-      const code = document.getElementById("exam-code").value.trim();
-      if (code === "") {
-        document.getElementById("error-message").classList.remove("hidden");
+    function startExam() {
+      // كنهزو الكود من الخانة وكنردوه حروف كبار
+      const code = document.getElementById("exam-code").value.trim().toUpperCase();
+      
+      if (code) {
+        // هاد السطر هو اللي كيدينا للصفحة ديال qcm وكيلصق الكود فالرابط
+        window.location.href = "qcm.html?examId=" + encodeURIComponent(code);
       } else {
-         
-        window.location.href = `qcm.html?code=${encodeURIComponent(code)}`;
+        alert("Veuillez entrer un code d'examen valide.");
       }
     }
   </script>
