@@ -56,4 +56,23 @@ class ExamController extends Controller
             'question' => $question
         ], 201);
     }
+    public function getExamByCode($code)
+    {
+        // 1. كنقلبو على الامتحان بهاد الكود
+        $exam = Exam::where('code_examen', $code)->first();
+
+        // 2. إيلا مالقيناهش، كنرجعو خطأ
+        if (!$exam) {
+            return response()->json(['message' => 'Examen introuvable ou code invalide'], 404);
+        }
+
+        // 3. إيلا لقيناه، كنجيبو ݣاع الأسئلة اللي مربوطين بيه
+        $questions = Question::where('exam_id', $exam->id)->get();
+
+        // 4. كنصيفطو الامتحان والأسئلة ديالو لـ الفرونت-اند
+        return response()->json([
+            'exam' => $exam,
+            'questions' => $questions
+        ], 200);
+    }
 }
