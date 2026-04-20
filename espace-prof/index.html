@@ -9,6 +9,7 @@
       background-image: url('https://www.dropbox.com/scl/fi/lki8ya9jqvcy4lg803lky/lecture-hall-1.jpeg?raw=1');
       background-size: cover;
       background-position: center;
+      background-attachment: fixed;
     }
     .bg-overlay {
       background-color: rgba(255, 255, 255, 0.95);
@@ -17,32 +18,66 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
+<body class="min-h-screen flex items-center justify-center py-10">
 
-  <div class="w-full max-w-md bg-overlay shadow-lg text-center">
-    <h1 class="text-2xl font-bold text-blue-700 mb-4">Créer un nouvel Examen</h1>
+  <div class="w-full max-w-2xl bg-overlay shadow-lg">
     
-    <input type="text" id="titre-examen" placeholder="Titre de l'examen (ex: JavaScript S5)" 
-           class="w-full p-2 mb-4 border rounded">
-           
-    <button onclick="creerExamen()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 w-full font-bold">
-      Générer le Code
-    </button>
+    <div id="section-creation" class="text-center">
+      <h1 class="text-2xl font-bold text-blue-700 mb-4">Créer un nouvel Examen</h1>
+      <input type="text" id="titre-examen" placeholder="Titre de l'examen (ex: JavaScript S5)" class="w-full p-2 mb-4 border rounded">
+      <button onclick="creerExamen()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 w-full font-bold">
+        Générer le Code
+      </button>
 
-    <div id="resultat" class="mt-6 hidden">
-      <p class="text-gray-700">Code de l'examen :</p>
-      <h2 id="code-affiche" class="text-3xl font-bold text-green-600 tracking-widest my-2"></h2>
-      <p class="text-sm text-gray-500">Partagez ce code avec vos étudiants.</p>
+      <div id="resultat" class="mt-6 hidden">
+        <p class="text-gray-700">Code de l'examen :</p>
+        <h2 id="code-affiche" class="text-3xl font-bold text-green-600 tracking-widest my-2"></h2>
+        <p class="text-sm text-gray-500 mb-4">Partagez ce code avec vos étudiants.</p>
+      </div>
     </div>
+
+    <hr class="my-6 border-gray-300">
+
+    <div id="section-questions" class="hidden">
+      <h2 class="text-xl font-bold text-blue-700 mb-4">Ajouter une question QCM</h2>
+      
+      <input type="text" id="texte-question" placeholder="Texte de la question..." class="w-full p-2 mb-4 border rounded font-semibold">
+      
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <input type="text" id="choix1" placeholder="Choix 1" class="w-full p-2 border rounded">
+        <input type="text" id="choix2" placeholder="Choix 2" class="w-full p-2 border rounded">
+        <input type="text" id="choix3" placeholder="Choix 3" class="w-full p-2 border rounded">
+        <input type="text" id="choix4" placeholder="Choix 4" class="w-full p-2 border rounded">
+      </div>
+
+      <div class="mb-4">
+        <label class="font-semibold text-gray-700 mr-2">Le bon choix est :</label>
+        <select id="reponse-correcte" class="p-2 border rounded">
+          <option value="1">Choix 1</option>
+          <option value="2">Choix 2</option>
+          <option value="3">Choix 3</option>
+          <option value="4">Choix 4</option>
+        </select>
+      </div>
+
+      <button onclick="ajouterQuestion()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full font-bold">
+        + Ajouter la question
+      </button>
+
+      <p id="msg-succes" class="text-green-600 font-bold mt-3 text-center hidden">Question ajoutée avec succès ! ✅</p>
+    </div>
+
   </div>
 
   <script>
+    let currentExamId = null; // غنخبيو هنا الـ id ديال الامتحان باش نربطوه مع الأسئلة
+
     function creerExamen() {
       const titre = document.getElementById("titre-examen").value;
-      const profId = 1;
+      const profId = 1; 
 
       if (!titre) {
-        alert("Veuillez entrer un titre pour l'examen.");
+        alert("Veuillez entrer un titre.");
         return;
       }
 
@@ -54,18 +89,69 @@
       .then(res => res.json())
       .then(data => {
         if(data.exam) {
+          // كنبينو الكود وكنبينو الفورميلير ديال الأسئلة
           document.getElementById("resultat").classList.remove("hidden");
           document.getElementById("code-affiche").innerText = data.exam.code_examen;
+          document.getElementById("section-questions").classList.remove("hidden");
+          
+          currentExamId = data.exam.id; // هزينا الـ ID
+          
+          // كنخفيو الزر باش مايعاودش يكريي امتحان اخر بالغلط
+          document.querySelector("button[onclick='creerExamen()']").disabled = true;
+          document.querySelector("button[onclick='creerExamen()']").classList.add("opacity-50");
         } else {
-          // هنا غادي يخرج لينا الميساج الحقيقي ديال الخطأ
-          alert("خطأ من Laravel: " + data.message);
-          console.log(data);
+          alert("Erreur: " + data.message);
         }
       })
-      .catch(err => {
-          console.error(err);
-          alert("كاين مشكل فالاتصال مع السيرفور.");
-      });
+      .catch(err => console.error(err));
+    }
+
+    function ajouterQuestion() {
+      if (!currentExamId) return;
+
+      const questionData = {
+        exam_id: currentExamId,
+        texte_question: document.getElementById("texte-question").value,
+        choix1: document.getElementById("choix1").value,
+        choix2: document.getElementById("choix2").value,
+        choix3: document.getElementById("choix3").value,
+        choix4: document.getElementById("choix4").value,
+        reponse_correcte: document.getElementById("reponse-correcte").value
+      };
+
+      // كنتأكدو بلي الخانات عامرين
+      if(!questionData.texte_question || !questionData.choix1 || !questionData.choix4) {
+          alert("Veuillez remplir la question et tous les choix.");
+          return;
+      }
+
+      fetch('http://localhost:8000/api/questions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(questionData)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.question) {
+          // كنبينو ميساج بلي السؤال تزاد
+          const msg = document.getElementById("msg-succes");
+          msg.classList.remove("hidden");
+          
+          // كنخويو الخانات باش يكتب سؤال جديد
+          document.getElementById("texte-question").value = "";
+          document.getElementById("choix1").value = "";
+          document.getElementById("choix2").value = "";
+          document.getElementById("choix3").value = "";
+          document.getElementById("choix4").value = "";
+          document.getElementById("reponse-correcte").value = "1";
+
+          // كنخفيو الميساج من بعد 3 ثواني
+          setTimeout(() => { msg.classList.add("hidden"); }, 3000);
+        } else {
+          alert("Erreur lors de l'ajout de la question.");
+        }
+      })
+      .catch(err => console.error(err));
     }
   </script>
 </body>

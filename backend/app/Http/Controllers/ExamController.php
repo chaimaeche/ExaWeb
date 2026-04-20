@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Exam;
+use App\Models\Question;
 use Illuminate\Support\Str;
 
 class ExamController extends Controller
@@ -26,6 +27,33 @@ class ExamController extends Controller
         return response()->json([
             'message' => 'Exam created successfully!',
             'exam' => $exam
+        ], 201);
+    }
+    public function addQuestion(Request $request)
+    {
+        $request->validate([
+            'exam_id' => 'required|exists:exams,id',
+            'texte_question' => 'required|string',
+            'choix1' => 'required|string',
+            'choix2' => 'required|string',
+            'choix3' => 'required|string',
+            'choix4' => 'required|string',
+            'reponse_correcte' => 'required|integer|in:1,2,3,4',
+        ]);
+
+        $question = Question::create([
+            'exam_id' => $request->exam_id,
+            'texte_question' => $request->texte_question,
+            'choix1' => $request->choix1,
+            'choix2' => $request->choix2,
+            'choix3' => $request->choix3,
+            'choix4' => $request->choix4,
+            'reponse_correcte' => $request->reponse_correcte,
+        ]);
+
+        return response()->json([
+            'message' => 'Question ajoutée avec succès !',
+            'question' => $question
         ], 201);
     }
 }
