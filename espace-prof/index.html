@@ -1,63 +1,71 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ExaWeb - Espace Étudiant</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>ExaWeb - Espace Enseignant</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background: url('https://www.dropbox.com/scl/fi/lki8ya9jqvcy4lg803lky/lecture-hall-1.jpeg?raw=1') no-repeat center center fixed;
+      background-image: url('https://www.dropbox.com/scl/fi/lki8ya9jqvcy4lg803lky/lecture-hall-1.jpeg?raw=1');
       background-size: cover;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      background-position: center;
     }
-    .container {
+    .bg-overlay {
       background-color: rgba(255, 255, 255, 0.95);
-      max-width: 400px;
-      margin: 100px auto;
-      padding: 30px;
-      border-radius: 10px;
-      text-align: center;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background-color: #0056b3;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #003d80;
+      border-radius: 1rem;
+      padding: 2rem;
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h1>Bienvenue sur ExaWeb</h1>
-    <p>Entrez le code d'examen ci-dessous :</p>
-    <input type="text" id="exam-code" placeholder="ex: ABC123">
-    <button onclick="startExam()">Accéder à l'examen</button>
+<body class="min-h-screen flex items-center justify-center">
+
+  <div class="w-full max-w-md bg-overlay shadow-lg text-center">
+    <h1 class="text-2xl font-bold text-blue-700 mb-4">Créer un nouvel Examen</h1>
+    
+    <input type="text" id="titre-examen" placeholder="Titre de l'examen (ex: JavaScript S5)" 
+           class="w-full p-2 mb-4 border rounded">
+           
+    <button onclick="creerExamen()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 w-full font-bold">
+      Générer le Code
+    </button>
+
+    <div id="resultat" class="mt-6 hidden">
+      <p class="text-gray-700">Code de l'examen :</p>
+      <h2 id="code-affiche" class="text-3xl font-bold text-green-600 tracking-widest my-2"></h2>
+      <p class="text-sm text-gray-500">Partagez ce code avec vos étudiants.</p>
+    </div>
   </div>
 
   <script>
-    function startExam() {
-      const code = document.getElementById("exam-code").value.trim();
-      if (code) {
-        window.location.href = `qcm.html?examId=${encodeURIComponent(code)}`;
-      } else {
-        alert("Veuillez entrer un code d'examen.");
+    function creerExamen() {
+      const titre = document.getElementById("titre-examen").value;
+      const profId = 1;
+
+      if (!titre) {
+        alert("Veuillez entrer un titre pour l'examen.");
+        return;
       }
+
+      fetch('http://localhost:8000/api/exams', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ titre: titre, professeur_id: profId })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.exam) {
+          document.getElementById("resultat").classList.remove("hidden");
+          document.getElementById("code-affiche").innerText = data.exam.code_examen;
+        } else {
+          // هنا غادي يخرج لينا الميساج الحقيقي ديال الخطأ
+          alert("خطأ من Laravel: " + data.message);
+          console.log(data);
+        }
+      })
+      .catch(err => {
+          console.error(err);
+          alert("كاين مشكل فالاتصال مع السيرفور.");
+      });
     }
   </script>
 </body>

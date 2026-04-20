@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
+            $table->string('titre'); 
+            $table->string('code_examen')->unique(); 
+            $table->foreignId('professeur_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
