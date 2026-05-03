@@ -32,30 +32,34 @@
 
         <!-- Formulaire d'inscription -->
         <form id="registerForm">
-            <input name="nom" placeholder="Nom" required>
-            <input name="prenom" placeholder="Prénom" required>
-            <input name="email" type="email" placeholder="Email" required>
-            <input name="password" type="password" placeholder="Mot de passe" required>
-            <input name="dateNaissance" type="date" required>
-            <select name="sexe" required>
+            <input id="nom" name="nom" placeholder="Nom" required>
+            <input id="prenom" name="prenom" placeholder="Prénom" required>
+            <input id="email" name="email" type="email" placeholder="Email" required>
+            <input id="password" name="password" type="password" placeholder="Mot de passe" required>
+            <input id="date_naissance" name="date_naissance" type="date" required>
+            
+            <select id="sexe" name="sexe" required>
                 <option value="">Sexe</option>
-                <option value="Homme">Homme</option>
-                <option value="Femme">Femme</option>
+                <option value="homme">Homme</option>
+                <option value="femme">Femme</option>
             </select>
-            <input name="etablissement" placeholder="Établissement" required>
-            <input name="filiere" placeholder="Filière" required>
-            <select name="role" required>
+            
+            <input id="etablissement" name="etablissement" placeholder="Établissement" required>
+            <input id="filiere" name="filiere" placeholder="Filière" required>
+            
+            <select id="role" name="role" required>
                 <option value="">Rôle</option>
                 <option value="etudiant">Étudiant</option>
                 <option value="enseignant">Enseignant</option>
             </select>
+            
             <button type="submit">S'inscrire</button>
         </form>
 
 
         <form id="loginForm">
-            <input name="email" type="email" placeholder="Email" required>
-            <input name="password" type="password" placeholder="Mot de passe" required>
+            <input id="login-email" name="email" type="email" placeholder="Email" required>
+            <input id="login-password" name="password" type="password" placeholder="Mot de passe" required>
             <button type="submit">Se connecter</button>
         </form>
 
