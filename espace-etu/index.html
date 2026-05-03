@@ -5,44 +5,148 @@
   <title>ExaWeb - Espace Étudiant</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-   body {
-      background-image: url('../frontend/img.jpeg') !important;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #05050a;
+        background-image: radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.15), transparent 50%),
+                          radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.15), transparent 50%);
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .bg-overlay {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 1rem;
-      padding: 2rem;
+
+    @keyframes antigravity {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes textTrain {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+
+    @keyframes neonPulse {
+        0% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
+        50% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.2); }
+        100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
+    }
+
+    .glass-card {
+        background: rgba(20, 20, 25, 0.6);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(0, 255, 255, 0.1);
+        animation: antigravity 6s infinite ease-in-out;
+        transition: all 0.4s ease;
+        width: 100%;
+        max-width: 28rem;
+    }
+
+    .glass-card:hover {
+        animation-play-state: paused;
+        transform: translateY(-5px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(188, 19, 254, 0.3);
+    }
+
+    .cyber-title {
+        font-size: 2.2em;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #00ffff, #bc13fe, #ffffff, #bc13fe, #00ffff);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textTrain 3s linear infinite;
+        letter-spacing: 2px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .cyber-input {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #00ffff;
+        font-size: 1.5em;
+        text-align: center;
+        letter-spacing: 4px;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+
+    .cyber-input::placeholder {
+        color: rgba(255, 255, 255, 0.2);
+        font-size: 0.8em;
+        letter-spacing: 2px;
+    }
+
+    .cyber-input:focus {
+        outline: none;
+        border-color: transparent;
+        background: rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .cyber-btn {
+        background: transparent;
+        color: #00ffff;
+        border: 1px solid #00ffff;
+        font-weight: 600;
+        font-size: 1.1em;
+        padding: 15px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        width: 100%;
+        animation: neonPulse 2s infinite;
+    }
+
+    .cyber-btn:hover {
+        background: #00ffff;
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.3);
+        transform: translateY(-3px) scale(1.02);
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
-  <div class="w-full max-w-md bg-overlay shadow-lg text-center">
-    <h1 class="text-2xl font-bold text-blue-700 mb-4">Espace Étudiant</h1>
-    <p class="mb-6 text-gray-700">Entrez le code d'examen fourni par votre professeur :</p>
+<body>
+
+  <div class="glass-card">
+    <h1 class="cyber-title">ESPACE ÉTUDIANT</h1>
+    <p class="text-center text-gray-400 mb-8 text-sm uppercase tracking-wider">Portail d'accès aux examens</p>
     
-    <input type="text" id="exam-code" placeholder="ex: XV5BWW" class="w-full p-3 mb-4 border rounded text-center font-bold tracking-widest uppercase text-xl">
+    <input type="text" id="exam-code" placeholder="EX: XV5BWW" class="cyber-input">
     
-    <button onclick="startExam()" class="bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-800 w-full font-bold text-lg transition">
+    <button onclick="startExam()" class="cyber-btn">
       Accéder à l'examen
     </button>
   </div>
 
   <script>
     function startExam() {
-      // كنهزو الكود من الخانة وكنردوه حروف كبار
       const code = document.getElementById("exam-code").value.trim().toUpperCase();
       
       if (code) {
-        // هاد السطر هو اللي كيدينا للصفحة ديال qcm وكيلصق الكود فالرابط
         window.location.href = "qcm.html?examId=" + encodeURIComponent(code);
       } else {
         alert("Veuillez entrer un code d'examen valide.");
       }
     }
   </script>
+
 </body>
 </html>

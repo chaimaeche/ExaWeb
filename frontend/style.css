@@ -1,26 +1,93 @@
 body {
-     font-family: Arial, sans-serif;
-    background-image: url('img.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-     margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #05050a;
+    background-image: radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.15), transparent 50%),
+                      radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.15), transparent 50%);
+    color: #fff;
+    margin: 0;
     padding: 0;
-        
+    min-height: 100vh;
+}
+
+@keyframes antigravity {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes textTrain {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes neonPulse {
+    0% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
+    50% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.2); }
+    100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
+}
+
+.header {
+    text-align: center;
+    background: rgba(5, 5, 10, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+    padding: 30px 10px;
+}
+
+.header h1 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #00ffff, #bc13fe, #ffffff, #bc13fe, #00ffff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textTrain 3s linear infinite;
+    letter-spacing: 2px;
+}
+
+.container, .hero-section {
+    max-width: 500px;
+    margin: 50px auto;
+    background: rgba(20, 20, 25, 0.6);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(0, 255, 255, 0.1);
+    animation: antigravity 5s infinite ease-in-out;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hero-section {
+    max-width: 700px;
+    text-align: center;
+}
+
+.container:hover, .hero-section:hover {
+    animation-play-state: paused;
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(188, 19, 254, 0.3);
 }
 
 h2 {
     text-align: center;
-    margin-top: 20px;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-.container {
-    max-width: 500px;
-    margin: auto;
-    background-color: white;
-    padding: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+.hero-section h2 {
+    font-size: 2.2em;
+}
+
+.hero-section p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #aeb8da;
 }
 
 form {
@@ -28,191 +95,52 @@ form {
     flex-direction: column;
 }
 
-form input,
-form select,
-form button {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-form button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-form button:hover {
-    background-color: #0056b3;
-}
-
-.toggle-buttons {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.toggle-buttons button {
-    margin: 0 10px;
-    padding: 10px 20px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    background-color: #6c757d;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.toggle-buttons button:hover {
-    background-color: #5a6268;
-}
-
 .visible {
     display: flex !important;
 }
 
-@media (max-width: 600px) {
-    .container {
-        padding: 20px;
-    }
-}
-.header {
-    text-align: center;
-    background-color: rgba(0, 47, 95, 0.9);
-    color: white;
-    padding: 30px 10px;
-}
-
-.header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-.hero-section {
-    text-align: center;
-    margin: 50px auto;
-    padding: 40px 20px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    max-width: 700px;
-    border-radius: 15px;
-    backdrop-filter: blur(4px);
-}
-
-.hero-section h2 {
-    font-size: 2.2em;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.hero-section p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-}
-
-#start-now {
-    background-color: #ffc107;
-    color: black;
-    font-weight: bold;
-    padding: 12px 25px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-#start-now:hover {
-    background-color: #e0a800;
-}
-#btn-inscription,
-#btn-connexion {
-    background-color: #ffc107;
-    
-    color: black;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-#btn-inscription:hover,
-#btn-connexion:hover {
-    background-color: #e0a800;
-    
-}
-
-/* Style des champs et du formulaire */
-form {
-    display: flex;
-    flex-direction: column;
-    background-color: transparent;
-}
-
-form input,
-form textarea,
-form button {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-    font-family: Arial, sans-serif;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-form button {
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-form button:hover {
-    background-color: #004094;
-}
-
-/* Amélioration du conteneur */
-.container {
-    background-color: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(5px);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    min-height: 400px;
-}
 form label {
     display: flex;
     align-items: center;
     gap: 8px;
     margin: 15px 0 5px;
-    font-weight: bold;
-    font-size: 1.05em;
-    color: #003366;
+    font-weight: 500;
+    font-size: 1em;
+    color: #aeb8da;
+    letter-spacing: 0.5px;
 }
 
 form label i {
-    color: #003366;
-    font-size: 1.1em;
+    color: #bc13fe;
 }
 
 form input,
-form textarea,
-form button {
+form select,
+form textarea {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #fff;
     font-size: 1em;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+form input::placeholder,
+form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: transparent;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.4), 0 0 15px rgba(0, 255, 255, 0.2);
 }
 
 textarea {
@@ -220,14 +148,71 @@ textarea {
     min-height: 100px;
 }
 
-form button {
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    font-weight: bold;
+form button,
+#start-now,
+#btn-inscription,
+#btn-connexion {
+    background: transparent;
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    font-weight: 600;
+    font-size: 1.1em;
+    padding: 15px;
+    border-radius: 50px;
     cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 15px;
+    width: 100%;
+    animation: neonPulse 2s infinite;
 }
 
-form button:hover {
-    background-color: #004080;
+form button:hover,
+#start-now:hover,
+#btn-inscription:hover,
+#btn-connexion:hover {
+    background: #00ffff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.3);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.toggle-buttons {
+    text-align: center;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.toggle-buttons button {
+    padding: 12px 25px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #aeb8da;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+}
+
+.toggle-buttons button:hover {
+    background: rgba(188, 19, 254, 0.1);
+    border-color: #bc13fe;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(188, 19, 254, 0.3);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .container, .hero-section {
+        padding: 25px;
+        margin: 20px;
+        animation: none;
+    }
+    .header h1 {
+        font-size: 2em;
+    }
 }

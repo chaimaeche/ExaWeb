@@ -6,72 +6,213 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background-image: url('../frontend/img.jpeg') !important;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #05050a;
+        background-image: radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.15), transparent 50%),
+                          radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.15), transparent 50%);
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .bg-overlay {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 1rem;
-      padding: 2rem;
+
+    @keyframes antigravity {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes textTrain {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+
+    @keyframes neonPulse {
+        0% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
+        50% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0, 255, 255, 0.2); }
+        100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
+    }
+
+    .glass-card {
+        background: rgba(20, 20, 25, 0.7);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(0, 255, 255, 0.1);
+        animation: antigravity 7s infinite ease-in-out;
+        transition: all 0.4s ease;
+        width: 100%;
+        max-width: 48rem;
+    }
+
+    .glass-card:hover {
+        animation-play-state: paused;
+        transform: translateY(-5px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(188, 19, 254, 0.3);
+    }
+
+    .cyber-title {
+        font-size: 2em;
+        margin-bottom: 20px;
+        background: linear-gradient(90deg, #00ffff, #bc13fe, #ffffff, #bc13fe, #00ffff);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textTrain 3s linear infinite;
+        letter-spacing: 1px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .cyber-input, .cyber-select {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 16px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .cyber-input::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .cyber-input:focus, .cyber-select:focus {
+        outline: none;
+        border-color: transparent;
+        background: rgba(0, 0, 0, 0.7);
+        box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.5), 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    .cyber-select option {
+        background: #0a0a0f;
+        color: #fff;
+    }
+
+    .cyber-btn {
+        background: transparent;
+        color: #00ffff;
+        border: 1px solid #00ffff;
+        font-weight: 600;
+        font-size: 1.1em;
+        padding: 12px 25px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        width: 100%;
+        animation: neonPulse 2.5s infinite;
+    }
+
+    .cyber-btn:hover:not(:disabled) {
+        background: #00ffff;
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        transform: translateY(-2px);
+    }
+
+    .cyber-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        animation: none;
+        border-color: #555;
+        color: #555;
+    }
+
+    .cyber-btn-add {
+        border-color: #bc13fe;
+        color: #bc13fe;
+        animation: none;
+    }
+
+    .cyber-btn-add:hover {
+        background: #bc13fe;
+        color: #fff;
+        box-shadow: 0 0 20px rgba(188, 19, 254, 0.6);
+    }
+
+    .code-display {
+        font-size: 3em;
+        font-family: 'Courier New', Courier, monospace;
+        color: #00ffff;
+        text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        letter-spacing: 6px;
+        margin: 15px 0;
+    }
+
+    .neon-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+        margin: 30px 0;
+        border: none;
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center py-10">
+<body class="py-10">
 
-  <div class="w-full max-w-2xl bg-overlay shadow-lg">
-    
-    <div id="section-creation" class="text-center">
-      <h1 class="text-2xl font-bold text-blue-700 mb-4">Créer un nouvel Examen</h1>
-      <input type="text" id="titre-examen" placeholder="Titre de l'examen (ex: JavaScript S5)" class="w-full p-2 mb-4 border rounded">
-      <button onclick="creerExamen()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 w-full font-bold">
-        Générer le Code
-      </button>
-
-      <div id="resultat" class="mt-6 hidden">
-        <p class="text-gray-700">Code de l'examen :</p>
-        <h2 id="code-affiche" class="text-3xl font-bold text-green-600 tracking-widest my-2"></h2>
-        <p class="text-sm text-gray-500 mb-4">Partagez ce code avec vos étudiants.</p>
-      </div>
-    </div>
-
-    <hr class="my-6 border-gray-300">
-
-    <div id="section-questions" class="hidden">
-      <h2 class="text-xl font-bold text-blue-700 mb-4">Ajouter une question QCM</h2>
+  <div class="w-full px-4 flex justify-center">
+    <div class="glass-card">
       
-      <input type="text" id="texte-question" placeholder="Texte de la question..." class="w-full p-2 mb-4 border rounded font-semibold">
-      
-      <div class="grid grid-cols-2 gap-4 mb-4">
-        <input type="text" id="choix1" placeholder="Choix 1" class="w-full p-2 border rounded">
-        <input type="text" id="choix2" placeholder="Choix 2" class="w-full p-2 border rounded">
-        <input type="text" id="choix3" placeholder="Choix 3" class="w-full p-2 border rounded">
-        <input type="text" id="choix4" placeholder="Choix 4" class="w-full p-2 border rounded">
+      <div id="section-creation" class="text-center">
+        <h1 class="cyber-title">GÉNÉRATEUR D'EXAMEN</h1>
+        <input type="text" id="titre-examen" placeholder="Titre de l'examen (ex: Programmation S5)" class="cyber-input text-center text-lg">
+        <button onclick="creerExamen()" class="cyber-btn mt-2">
+          Générer le Code Sécurisé
+        </button>
+
+        <div id="resultat" class="mt-8 hidden">
+          <p class="text-gray-400 uppercase tracking-widest text-sm">Clé d'accès générée :</p>
+          <h2 id="code-affiche" class="code-display font-bold font-mono uppercase"></h2>
+          <p class="text-sm text-purple-400 mb-2 tracking-wide">Transmettez cette clé aux étudiants pour l'accès.</p>
+        </div>
       </div>
 
-      <div class="mb-4">
-        <label class="font-semibold text-gray-700 mr-2">Le bon choix est :</label>
-        <select id="reponse-correcte" class="p-2 border rounded">
-          <option value="1">Choix 1</option>
-          <option value="2">Choix 2</option>
-          <option value="3">Choix 3</option>
-          <option value="4">Choix 4</option>
-        </select>
+      <hr class="neon-divider">
+
+      <div id="section-questions" class="hidden">
+        <h2 class="cyber-title" style="font-size: 1.5em; background-image: linear-gradient(90deg, #bc13fe, #00ffff);">Base de Données des Questions</h2>
+        
+        <input type="text" id="texte-question" placeholder="Saisir la question ici..." class="cyber-input font-semibold">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+          <input type="text" id="choix1" placeholder="Option A" class="cyber-input mb-0">
+          <input type="text" id="choix2" placeholder="Option B" class="cyber-input mb-0">
+          <input type="text" id="choix3" placeholder="Option C" class="cyber-input mb-0">
+          <input type="text" id="choix4" placeholder="Option D" class="cyber-input mb-0">
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mt-6 mb-6 p-4 rounded-xl" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(188,19,254,0.2);">
+          <label class="font-semibold text-gray-300 tracking-wide">Définir la réponse correcte :</label>
+          <select id="reponse-correcte" class="cyber-select w-full md:w-1/2 mb-0">
+            <option value="1">Option A</option>
+            <option value="2">Option B</option>
+            <option value="3">Option C</option>
+            <option value="4">Option D</option>
+          </select>
+        </div>
+
+        <button onclick="ajouterQuestion()" class="cyber-btn cyber-btn-add">
+          Insérer la question au système
+        </button>
+
+        <p id="msg-succes" class="text-green-400 font-bold mt-6 text-center tracking-wider hidden drop-shadow-[0_0_8px_rgba(74,222,128,0.6)]">Données enregistrées avec succès !</p>
       </div>
 
-      <button onclick="ajouterQuestion()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full font-bold">
-        + Ajouter la question
-      </button>
-
-      <p id="msg-succes" class="text-green-600 font-bold mt-3 text-center hidden">Question ajoutée avec succès ! ✅</p>
     </div>
-
   </div>
 
   <script>
-    let currentExamId = null; // غنخبيو هنا الـ id ديال الامتحان باش نربطوه مع الأسئلة
+    let currentExamId = null;
 
     function creerExamen() {
       const titre = document.getElementById("titre-examen").value;
@@ -90,16 +231,15 @@
       .then(res => res.json())
       .then(data => {
         if(data.exam) {
-          // كنبينو الكود وكنبينو الفورميلير ديال الأسئلة
           document.getElementById("resultat").classList.remove("hidden");
           document.getElementById("code-affiche").innerText = data.exam.code_examen;
           document.getElementById("section-questions").classList.remove("hidden");
           
-          currentExamId = data.exam.id; // هزينا الـ ID
+          currentExamId = data.exam.id;
           
-          // كنخفيو الزر باش مايعاودش يكريي امتحان اخر بالغلط
-          document.querySelector("button[onclick='creerExamen()']").disabled = true;
-          document.querySelector("button[onclick='creerExamen()']").classList.add("opacity-50");
+          const btnGen = document.querySelector("button[onclick='creerExamen()']");
+          btnGen.disabled = true;
+          btnGen.classList.add("opacity-50");
         } else {
           alert("Erreur: " + data.message);
         }
@@ -120,7 +260,6 @@
         reponse_correcte: document.getElementById("reponse-correcte").value
       };
 
-      // كنتأكدو بلي الخانات عامرين
       if(!questionData.texte_question || !questionData.choix1 || !questionData.choix4) {
           alert("Veuillez remplir la question et tous les choix.");
           return;
@@ -134,11 +273,9 @@
       .then(res => res.json())
       .then(data => {
         if(data.question) {
-          // كنبينو ميساج بلي السؤال تزاد
           const msg = document.getElementById("msg-succes");
           msg.classList.remove("hidden");
           
-          // كنخويو الخانات باش يكتب سؤال جديد
           document.getElementById("texte-question").value = "";
           document.getElementById("choix1").value = "";
           document.getElementById("choix2").value = "";
@@ -146,7 +283,6 @@
           document.getElementById("choix4").value = "";
           document.getElementById("reponse-correcte").value = "1";
 
-          // كنخفيو الميساج من بعد 3 ثواني
           setTimeout(() => { msg.classList.add("hidden"); }, 3000);
         } else {
           alert("Erreur lors de l'ajout de la question.");
