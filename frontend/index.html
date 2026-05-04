@@ -1,109 +1,364 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Inscription / Connexion - EXaWeB</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExaWeb - Accueil</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fafafa;
+        background-image: 
+            linear-gradient(to right, rgba(17, 17, 17, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(17, 17, 17, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        color: #111111;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+    }
+    body::before, body::after {
+        content: '';
+        position: fixed;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        z-index: -1;
+        filter: blur(120px);
+        opacity: 0.4;
+        animation: orbMove 15s infinite alternate ease-in-out;
+    }
+    body::before {
+        background: #ffcc00;
+        top: -150px;
+        left: -150px;
+    }
+    body::after {
+        background: #ff0055;
+        bottom: -150px;
+        right: -100px;
+        animation-delay: -7s;
+        animation-duration: 20s;
+    }
+    @keyframes orbMove {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(150px, 100px) scale(1.2); }
+        100% { transform: translate(-50px, 150px) scale(0.9); }
+    }
+    .header {
+        text-align: center;
+        padding: 60px 10px 20px;
+    }
+    .header h1 {
+        font-size: 4.5em;
+        margin: 0;
+        color: #111111;
+        font-weight: 900;
+        letter-spacing: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+    .header h1 span {
+        background: linear-gradient(90deg, #111, #333);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .cap-icon {
+        font-size: 0.8em;
+        background: linear-gradient(135deg, #ff0055, #c026d3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 10px 15px rgba(255, 0, 85, 0.4));
+        animation: dropHat 10s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+        display: inline-block;
+        transform-origin: bottom center;
+    }
+    @keyframes dropHat {
+        0% { transform: translateY(-300px) rotate(-30deg) scale(1.2); opacity: 0; }
+        5% { transform: translateY(0) rotate(0) scale(1); opacity: 1; }
+        8% { transform: translateY(-30px) rotate(10deg); }
+        11% { transform: translateY(0) rotate(0); }
+        13% { transform: translateY(-10px) rotate(-5deg); }
+        16% { transform: translateY(0) rotate(0); opacity: 1; }
+        85% { transform: translateY(0) rotate(0); opacity: 1; }
+        90% { transform: translateY(30px) scale(0.8); opacity: 0; }
+        100% { transform: translateY(-300px); opacity: 0; }
+    }
+    .slider-container {
+        max-width: 750px;
+        margin: 20px auto 50px;
+        background: #ffffff;
+        border: 2px solid #111111;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 8px 8px 0px #ffcc00;
+        height: 220px;
+        position: relative;
+    }
+    .slider {
+        display: flex;
+        width: 400%;
+        height: 100%;
+        animation: slideAnim 16s infinite cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .slide {
+        width: 25%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .slide i {
+        font-size: 3.5em;
+        margin-bottom: 15px;
+        color: #111111;
+        text-shadow: 3px 3px 0px #ffcc00;
+        animation: floatIcon 3s ease-in-out infinite;
+    }
+    .slide h2 {
+        font-size: 1.5em;
+        color: #111111;
+        margin: 0;
+        font-weight: 800;
+    }
+    @keyframes slideAnim {
+        0%, 20% { transform: translateX(0%); }
+        25%, 45% { transform: translateX(-25%); }
+        50%, 70% { transform: translateX(-50%); }
+        75%, 95% { transform: translateX(-75%); }
+        100% { transform: translateX(0%); }
+    }
+    @keyframes floatIcon {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+    }
+    .auth-buttons-wrapper {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .auth-buttons {
+        display: inline-flex;
+        background: #ffffff;
+        padding: 8px;
+        border-radius: 50px;
+        gap: 5px;
+        border: 2px solid #e2e8f0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    .auth-buttons button {
+        background: transparent;
+        color: #64748b;
+        border: none;
+        font-weight: 800;
+        font-size: 1.1em;
+        padding: 12px 35px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .auth-buttons button.active {
+        background: #ffcc00;
+        color: #111111;
+        box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+    }
+    .form-container {
+        max-width: 480px;
+        margin: 0 auto 50px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        border: 2px solid #111111;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 10px 10px 0px #111111;
+    }
+    form {
+        display: none;
+        flex-direction: column;
+    }
+    form.active {
+        display: flex;
+        animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    form h3 {
+        text-align: center;
+        color: #111111;
+        font-size: 1.8em;
+        margin-top: 0;
+        margin-bottom: 25px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    form input, form select {
+        width: 100%;
+        padding: 16px;
+        margin-bottom: 18px;
+        border-radius: 12px;
+        background: #f8fafc;
+        border: 2px solid #cbd5e1;
+        color: #111111;
+        font-size: 1.05em;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    form input:focus, form select:focus {
+        outline: none;
+        border-color: #111111;
+        background: #ffffff;
+        box-shadow: 4px 4px 0px #ffcc00;
+    }
+    form input::placeholder {
+        color: #94a3b8;
+    }
+    form select:invalid {
+        color: #94a3b8;
+    }
+    .submit-btn {
+        background: #111111;
+        color: #ffcc00;
+        border: 2px solid #111111;
+        font-weight: 800;
+        font-size: 1.2em;
+        padding: 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+    .submit-btn:hover {
+        background: #ffcc00;
+        color: #111111;
+        box-shadow: 6px 6px 0px #111111;
+        transform: translate(-2px, -2px);
+    }
+    @media (max-width: 600px) {
+        .header h1 { font-size: 3em; }
+        .slider-container { height: 250px; margin: 20px; }
+        .slide h2 { font-size: 1.2em; }
+        .form-container { margin: 20px; padding: 25px; }
+        .form-row { flex-direction: column; gap: 0 !important; }
+    }
+    .form-row {
+        display: flex;
+        gap: 15px;
+    }
+  </style>
 </head>
-
 <body>
 
-    <!-- En-tête bleue -->
-    <div class="header">
-        <h1>Bienvenue sur la plateforme EXaWeB</h1>
+  <div class="header">
+    <h1><span>EXAWEB</span> <i class="fa-solid fa-graduation-cap cap-icon"></i></h1>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <i class="fa-solid fa-file-pen"></i>
+        <h2>Créez vos examens avec facilité et sécurité</h2>
+      </div>
+      <div class="slide">
+        <i class="fa-solid fa-user-graduate"></i>
+        <h2>Passez vos examens en toute confiance</h2>
+      </div>
+      <div class="slide">
+        <i class="fa-solid fa-chart-line"></i>
+        <h2>Correction automatique et instantanée</h2>
+      </div>
+      <div class="slide">
+        <i class="fa-solid fa-laptop-code"></i>
+        <h2>Interface moderne pour profs et étudiants</h2>
+      </div>
     </div>
+  </div>
 
-    <!-- Section de motivation -->
-    <div class="hero-section">
-        <h2>Votre avenir commence ici</h2>
-        <p>Rejoignez une communauté d'apprenants et de formateurs sur une plateforme moderne, fiable et rapide.</p>
-        <button id="start-now">Commencer maintenant</button>
+  <div class="auth-buttons-wrapper">
+    <div class="auth-buttons">
+      <button id="btn-connexion" class="active" onclick="showForm('login')">Connexion</button>
+      <button id="btn-inscription" onclick="showForm('register')">Inscription</button>
     </div>
+  </div>
 
-    <!-- Boutons de bascule -->
-    <div class="toggle-buttons" style="display: none;" id="toggle-buttons">
-        <button id="btn-inscription">Inscription</button>
-        <button id="btn-connexion">Connexion</button>
-    </div>
+  <div class="form-container">
+    <form id="form-login" class="active">
+      <h3>Bon retour !</h3>
+      <input type="email" name="email" placeholder="Adresse Email" required>
+      <input type="password" name="password" placeholder="Mot de passe" required>
+      <button type="submit" class="submit-btn">Se connecter</button>
+    </form>
 
-    <!-- Conteneur des formulaires -->
-    <div class="container" id="register-login" style="display: none;">
+    <form id="form-register">
+      <h3>Rejoignez-nous</h3>
+      
+      <div class="form-row">
+        <input type="text" name="nom" placeholder="Nom" required>
+        <input type="text" name="prenom" placeholder="Prénom" required>
+      </div>
 
-        <!-- Formulaire d'inscription -->
-        <form id="registerForm">
-            <input id="nom" name="nom" placeholder="Nom" required>
-            <input id="prenom" name="prenom" placeholder="Prénom" required>
-            <input id="email" name="email" type="email" placeholder="Email" required>
-            <input id="password" name="password" type="password" placeholder="Mot de passe" required>
-            <input id="date_naissance" name="date_naissance" type="date" required>
-            
-            <select id="sexe" name="sexe" required>
-                <option value="">Sexe</option>
-                <option value="homme">Homme</option>
-                <option value="femme">Femme</option>
-            </select>
-            
-            <input id="etablissement" name="etablissement" placeholder="Établissement" required>
-            <input id="filiere" name="filiere" placeholder="Filière" required>
-            
-            <select id="role" name="role" required>
-                <option value="">Rôle</option>
-                <option value="etudiant">Étudiant</option>
-                <option value="enseignant">Enseignant</option>
-            </select>
-            
-            <button type="submit">S'inscrire</button>
-        </form>
+      <input type="email" name="email" placeholder="Adresse Email" required>
 
+      <div class="form-row">
+        <input type="date" name="date_naissance" required style="color: #94a3b8;" onfocus="this.style.color='#111111'" onblur="if(!this.value) this.style.color='#94a3b8'">
+        <select name="sexe" required>
+          <option value="" disabled selected hidden>Sexe</option>
+          <option value="homme">Homme</option>
+          <option value="femme">Femme</option>
+        </select>
+      </div>
 
-        <form id="loginForm">
-            <input id="login-email" name="email" type="email" placeholder="Email" required>
-            <input id="login-password" name="password" type="password" placeholder="Mot de passe" required>
-            <button type="submit">Se connecter</button>
-        </form>
+      <div class="form-row">
+        <input type="text" name="etablissement" placeholder="Établissement" required>
+        <input type="text" name="filiere" placeholder="Filière" required>
+      </div>
 
-    </div>
+      <select name="role" required>
+        <option value="" disabled selected hidden>Vous êtes ? (Rôle)</option>
+        <option value="etudiant">Étudiant</option>
+        <option value="enseignant">Enseignant</option>
+      </select>
 
-    <script src="app.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const registerForm = document.getElementById("registerForm");
-            const loginForm = document.getElementById("loginForm");
-            const btnInscription = document.getElementById("btn-inscription");
-            const btnConnexion = document.getElementById("btn-connexion");
-            const startNowBtn = document.getElementById("start-now");
-            const toggleButtons = document.getElementById("toggle-buttons");
-            const container = document.getElementById("register-login");
+      <input type="password" name="password" placeholder="Mot de passe" required>
+      
+      <button type="submit" class="submit-btn">S'inscrire</button>
+    </form>
+  </div>
 
+  <script>
+    function showForm(formType) {
+      const formLogin = document.getElementById('form-login');
+      const formRegister = document.getElementById('form-register');
+      const btnConnexion = document.getElementById('btn-connexion');
+      const btnInscription = document.getElementById('btn-inscription');
 
-            registerForm.style.display = "none";
-            loginForm.style.display = "none";
-
-
-            startNowBtn.addEventListener("click", function () {
-                toggleButtons.style.display = "block";
-                container.style.display = "block";
-                btnInscription.click();
-                window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
-            });
-
-
-            btnInscription.addEventListener("click", function (e) {
-                e.preventDefault();
-                registerForm.style.display = "flex";
-                loginForm.style.display = "none";
-            });
-
-
-            btnConnexion.addEventListener("click", function (e) {
-                e.preventDefault();
-                loginForm.style.display = "flex";
-                registerForm.style.display = "none";
-            });
-        });
-    </script>
+      if (formType === 'login') {
+        formLogin.classList.add('active');
+        formRegister.classList.remove('active');
+        btnConnexion.classList.add('active');
+        btnInscription.classList.remove('active');
+      } else {
+        formLogin.classList.remove('active');
+        formRegister.classList.add('active');
+        btnConnexion.classList.remove('active');
+        btnInscription.classList.add('active');
+      }
+    }
+  </script>
 
 </body>
-
 </html>

@@ -1,18 +1,32 @@
+/* =========================================
+   2060 FUTURISTIC UI - EXAWEB MATRIX
+   ========================================= */
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #05050a;
-    background-image: radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.15), transparent 50%),
-                      radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.15), transparent 50%);
+    background-color: #02010a;
+    /* خلفية الإيموجي المتحركة + إضاءة نيون */
+    background-image: 
+        url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.05'%3E%3Ctext x='50' y='50' font-size='40'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 70 35' to='360 70 35' dur='15s' repeatCount='indefinite'/%3E📚%3C/text%3E%3Ctext x='300' y='100' font-size='50'%3E%3CanimateTransform attributeName='transform' type='rotate' from='360 325 85' to='0 325 85' dur='20s' repeatCount='indefinite'/%3E🎓%3C/text%3E%3Ctext x='150' y='300' font-size='35'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 165 290' to='360 165 290' dur='12s' repeatCount='indefinite'/%3E📝%3C/text%3E%3Ctext x='350' y='350' font-size='45'%3E%3CanimateTransform attributeName='transform' type='rotate' from='360 370 335' to='0 370 335' dur='18s' repeatCount='indefinite'/%3E💡%3C/text%3E%3Ctext x='50' y='250' font-size='30'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 65 240' to='360 65 240' dur='10s' repeatCount='indefinite'/%3E🧠%3C/text%3E%3C/g%3E%3C/svg%3E"),
+        radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.15), transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.15), transparent 50%);
     color: #fff;
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    animation: spaceDrift 60s linear infinite;
+}
+
+/* 1. التحركات (Keyframes) */
+@keyframes spaceDrift {
+    0% { background-position: 0px 0px, 0 0, 0 0; }
+    100% { background-position: -400px -400px, 0 0, 0 0; }
 }
 
 @keyframes antigravity {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
-    100% { transform: translateY(0px); }
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(0.5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
 }
 
 @keyframes textTrain {
@@ -22,41 +36,62 @@ body {
 
 @keyframes neonPulse {
     0% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
-    50% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), inset 0 0 15px rgba(0, 255, 255, 0.3); }
     100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
 }
 
+@keyframes glitch {
+    0% { text-shadow: 2px 0 #00ffff, -2px 0 #bc13fe; }
+    50% { text-shadow: -2px 0 #00ffff, 2px 0 #bc13fe; }
+    100% { text-shadow: 2px 0 #00ffff, -2px 0 #bc13fe; }
+}
+
+@keyframes borderDance {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 2. الهيدر */
 .header {
     text-align: center;
-    background: rgba(5, 5, 10, 0.7);
+    background: rgba(2, 1, 10, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(0, 255, 255, 0.2);
     padding: 30px 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .header h1 {
-    font-size: 2.8em;
+    font-size: 3em;
     margin-bottom: 10px;
     background: linear-gradient(90deg, #00ffff, #bc13fe, #ffffff, #bc13fe, #00ffff);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: textTrain 3s linear infinite;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    font-weight: 900;
 }
 
+.header h1:hover {
+    animation: glitch 0.3s infinite;
+}
+
+/* 3. الحاويات (Containers) */
 .container, .hero-section {
+    position: relative;
     max-width: 500px;
     margin: 50px auto;
-    background: rgba(20, 20, 25, 0.6);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    border-radius: 24px;
+    background: linear-gradient(#080812, #080812) padding-box,
+                linear-gradient(135deg, #00ffff, #bc13fe, #00ff88, #00ffff) border-box;
+    border: 2px solid transparent;
+    border-radius: 30px;
     padding: 40px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(0, 255, 255, 0.1);
-    animation: antigravity 5s infinite ease-in-out;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(0, 255, 255, 0.05);
+    animation: borderDance 4s linear infinite, antigravity 6s ease-in-out infinite;
+    background-size: 200% 200%;
     transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -67,8 +102,8 @@ body {
 
 .container:hover, .hero-section:hover {
     animation-play-state: paused;
-    transform: translateY(-15px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(188, 19, 254, 0.3);
+    transform: translateY(-20px) scale(1.02);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), inset 0 0 0 2px rgba(188, 19, 254, 0.4);
 }
 
 h2 {
@@ -76,12 +111,14 @@ h2 {
     color: #fff;
     margin-top: 0;
     margin-bottom: 25px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-weight: 800;
+    letter-spacing: 2px;
 }
 
 .hero-section h2 {
-    font-size: 2.2em;
+    font-size: 2.5em;
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0,255,255,0.5);
 }
 
 .hero-section p {
@@ -90,6 +127,7 @@ h2 {
     color: #aeb8da;
 }
 
+/* 4. الفورم والخانات */
 form {
     display: none;
     flex-direction: column;
@@ -104,10 +142,10 @@ form label {
     align-items: center;
     gap: 8px;
     margin: 15px 0 5px;
-    font-weight: 500;
-    font-size: 1em;
-    color: #aeb8da;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-size: 1.1em;
+    color: #00ffff;
+    letter-spacing: 1px;
 }
 
 form label i {
@@ -118,29 +156,31 @@ form input,
 form select,
 form textarea {
     width: 100%;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px 15px 15px 5px;
+    margin-bottom: 20px;
+    background: rgba(0, 255, 255, 0.02);
+    border: none;
+    border-bottom: 2px solid rgba(0, 255, 255, 0.3);
     color: #fff;
-    font-size: 1em;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
+    font-size: 1.1em;
+    transition: all 0.4s ease;
+    border-radius: 5px 5px 0 0;
 }
 
 form input::placeholder,
 form textarea::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.2);
+    letter-spacing: 1px;
 }
 
 form input:focus,
 form select:focus,
 form textarea:focus {
     outline: none;
-    border-color: transparent;
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.4), 0 0 15px rgba(0, 255, 255, 0.2);
+    background: rgba(0, 255, 255, 0.08);
+    border-bottom: 2px solid #bc13fe;
+    box-shadow: 0 10px 15px -10px rgba(188, 19, 254, 0.5);
+    padding-left: 15px; /* كتحرك الكتابة ملي كتكليكي */
 }
 
 textarea {
@@ -148,39 +188,75 @@ textarea {
     min-height: 100px;
 }
 
+/* 5. البوطونات الفضائية (مع تأثير الكليك) */
 form button,
 #start-now,
 #btn-inscription,
 #btn-connexion {
-    background: transparent;
+    position: relative;
+    background: rgba(0, 255, 255, 0.05);
     color: #00ffff;
     border: 1px solid #00ffff;
-    font-weight: 600;
-    font-size: 1.1em;
+    font-weight: 800;
+    font-size: 1.2em;
     padding: 15px;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     margin-top: 15px;
     width: 100%;
-    animation: neonPulse 2s infinite;
+    overflow: hidden;
+    animation: neonPulse 2.5s infinite;
 }
 
+/* تأثير الضو اللي كيدوز وسط البوطونة */
+form button::after,
+#start-now::after,
+#btn-inscription::after,
+#btn-connexion::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: 0.5s;
+}
+
+/* ملي كتدوزي الماوس */
 form button:hover,
 #start-now:hover,
 #btn-inscription:hover,
 #btn-connexion:hover {
     background: #00ffff;
     color: #000;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.3);
-    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.4);
+    transform: translateY(-5px) scale(1.03);
 }
 
+form button:hover::after,
+#start-now:hover::after,
+#btn-inscription:hover::after,
+#btn-connexion:hover::after {
+    left: 150%;
+}
+
+/* ملي كتكليكي على البوطونة (التأثير الجديد) */
+form button:active,
+#start-now:active,
+#btn-inscription:active,
+#btn-connexion:active {
+    transform: translateY(2px) scale(0.95);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), inset 0 0 20px rgba(0,0,0,0.5);
+    background: #bc13fe;
+    border-color: #bc13fe;
+    color: #fff;
+}
+
+/* 6. بوطونات التبديل */
 .toggle-buttons {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -188,24 +264,30 @@ form button:hover,
 
 .toggle-buttons button {
     padding: 12px 25px;
-    font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
     background: rgba(255, 255, 255, 0.03);
     color: #aeb8da;
     cursor: pointer;
     transition: all 0.3s;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
 }
 
 .toggle-buttons button:hover {
-    background: rgba(188, 19, 254, 0.1);
+    background: rgba(188, 19, 254, 0.15);
     border-color: #bc13fe;
     color: #fff;
-    box-shadow: 0 0 15px rgba(188, 19, 254, 0.3);
-    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(188, 19, 254, 0.4);
+    transform: translateY(-3px);
 }
 
+.toggle-buttons button:active {
+    transform: scale(0.95);
+    background: #bc13fe;
+}
+
+/* التجاوب مع التيليفون */
 @media (max-width: 600px) {
     .container, .hero-section {
         padding: 25px;
@@ -213,6 +295,6 @@ form button:hover,
         animation: none;
     }
     .header h1 {
-        font-size: 2em;
+        font-size: 2.2em;
     }
 }
