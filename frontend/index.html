@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExaWeb - Accueil</title>
+  <title>Inscription / Connexion - EXaWeB</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
+    /* =========================================
+       STYLE: BLACK, YELLOW & GRID (LIGHT) + SLIDER
+       ========================================= */
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #fafafa;
@@ -50,18 +53,19 @@
     }
     .header {
         text-align: center;
-        padding: 60px 10px 20px;
+        padding: 60px 10px 10px;
     }
     .header h1 {
-        font-size: 4.5em;
+        font-size: 3.5em;
         margin: 0;
         color: #111111;
         font-weight: 900;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 15px;
+        flex-wrap: wrap;
     }
     .header h1 span {
         background: linear-gradient(90deg, #111, #333);
@@ -89,9 +93,11 @@
         90% { transform: translateY(30px) scale(0.8); opacity: 0; }
         100% { transform: translateY(-300px); opacity: 0; }
     }
+
+    /* ========= SLIDER (Ajouté) ========= */
     .slider-container {
         max-width: 750px;
-        margin: 20px auto 50px;
+        margin: 20px auto 30px;
         background: #ffffff;
         border: 2px solid #111111;
         border-radius: 24px;
@@ -141,9 +147,31 @@
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-6px); }
     }
+    /* ==================================== */
+
+    #start-now {
+        background: #111111;
+        color: #ffcc00;
+        border: 2px solid #111111;
+        font-weight: 800;
+        font-size: 1.2em;
+        padding: 15px 35px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 4px 4px 0px #ffcc00;
+    }
+    #start-now:hover {
+        background: #ffcc00;
+        color: #111111;
+        box-shadow: 6px 6px 0px #111111;
+        transform: translate(-2px, -2px);
+    }
     .auth-buttons-wrapper {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
     }
     .auth-buttons {
         display: inline-flex;
@@ -184,24 +212,6 @@
         display: none;
         flex-direction: column;
     }
-    form.active {
-        display: flex;
-        animation: fadeIn 0.4s ease;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    form h3 {
-        text-align: center;
-        color: #111111;
-        font-size: 1.8em;
-        margin-top: 0;
-        margin-bottom: 25px;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
     form input, form select {
         width: 100%;
         padding: 16px;
@@ -214,7 +224,6 @@
         transition: all 0.3s ease;
         box-sizing: border-box;
         font-weight: 500;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     form input:focus, form select:focus {
         outline: none;
@@ -222,12 +231,9 @@
         background: #ffffff;
         box-shadow: 4px 4px 0px #ffcc00;
     }
-    form input::placeholder {
-        color: #94a3b8;
-    }
-    form select:invalid {
-        color: #94a3b8;
-    }
+    form input::placeholder { color: #94a3b8; }
+    form select:invalid { color: #94a3b8; }
+    
     .submit-btn {
         background: #111111;
         color: #ffcc00;
@@ -240,7 +246,7 @@
         transition: all 0.3s ease;
         margin-top: 10px;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
     }
     .submit-btn:hover {
         background: #ffcc00;
@@ -248,25 +254,25 @@
         box-shadow: 6px 6px 0px #111111;
         transform: translate(-2px, -2px);
     }
-    @media (max-width: 600px) {
-        .header h1 { font-size: 3em; }
-        .slider-container { height: 250px; margin: 20px; }
-        .slide h2 { font-size: 1.2em; }
-        .form-container { margin: 20px; padding: 25px; }
-        .form-row { flex-direction: column; gap: 0 !important; }
-    }
     .form-row {
         display: flex;
         gap: 15px;
+    }
+    @media (max-width: 600px) {
+        .header h1 { font-size: 2.5em; }
+        .form-container { margin: 20px; padding: 25px; }
+        .form-row { flex-direction: column; gap: 0; }
+        .slider-container { height: 250px; margin: 20px; }
     }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1><span>EXAWEB</span> <i class="fa-solid fa-graduation-cap cap-icon"></i></h1>
+    <h1><span>Bienvenue sur la plateforme EXaWeB</span> <i class="fa-solid fa-graduation-cap cap-icon"></i></h1>
   </div>
 
+  <!-- LE SLIDER AVEC LES 4 CARTES ET ANIMATIONS -->
   <div class="slider-container">
     <div class="slider">
       <div class="slide">
@@ -288,77 +294,110 @@
     </div>
   </div>
 
-  <div class="auth-buttons-wrapper">
+  <!-- Le bouton 'Commencer maintenant' gardé intact pour que ton JS marche ! -->
+  <div style="text-align: center; margin-bottom: 40px;">
+    <button id="start-now">Commencer maintenant</button>
+  </div>
+
+  <div class="auth-buttons-wrapper" id="toggle-buttons" style="display: none;">
     <div class="auth-buttons">
-      <button id="btn-connexion" class="active" onclick="showForm('login')">Connexion</button>
-      <button id="btn-inscription" onclick="showForm('register')">Inscription</button>
+      <button id="btn-inscription">Inscription</button>
+      <button id="btn-connexion">Connexion</button>
     </div>
   </div>
 
-  <div class="form-container">
-    <form id="form-login" class="active">
-      <h3>Bon retour !</h3>
-      <input type="email" name="email" placeholder="Adresse Email" required>
-      <input type="password" name="password" placeholder="Mot de passe" required>
-      <button type="submit" class="submit-btn">Se connecter</button>
-    </form>
-
-    <form id="form-register">
-      <h3>Rejoignez-nous</h3>
+  <div class="form-container" id="register-login" style="display: none;">
+    
+    <!-- Formulaire d'inscription -->
+    <form id="registerForm">
+      <div class="form-row">
+        <input id="nom" name="nom" placeholder="Nom" required>
+        <input id="prenom" name="prenom" placeholder="Prénom" required>
+      </div>
+      
+      <input id="email" name="email" type="email" placeholder="Email" required>
       
       <div class="form-row">
-        <input type="text" name="nom" placeholder="Nom" required>
-        <input type="text" name="prenom" placeholder="Prénom" required>
+        <input id="password" name="password" type="password" placeholder="Mot de passe" required>
+        <input id="password_confirmation" name="password_confirmation" type="password" placeholder="Confirmer mot de passe" required>
       </div>
 
-      <input type="email" name="email" placeholder="Adresse Email" required>
-
       <div class="form-row">
-        <input type="date" name="date_naissance" required style="color: #94a3b8;" onfocus="this.style.color='#111111'" onblur="if(!this.value) this.style.color='#94a3b8'">
-        <select name="sexe" required>
-          <option value="" disabled selected hidden>Sexe</option>
-          <option value="homme">Homme</option>
-          <option value="femme">Femme</option>
+        <input id="date_naissance" name="date_naissance" type="date" required style="color: #94a3b8;" onfocus="this.style.color='#111111'" onblur="if(!this.value) this.style.color='#94a3b8'">
+        <select id="sexe" name="sexe" required>
+            <option value="" disabled selected hidden>Sexe</option>
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
         </select>
       </div>
 
       <div class="form-row">
-        <input type="text" name="etablissement" placeholder="Établissement" required>
-        <input type="text" name="filiere" placeholder="Filière" required>
+        <input id="etablissement" name="etablissement" placeholder="Établissement" required>
+        <input id="filiere" name="filiere" placeholder="Filière" required>
       </div>
-
-      <select name="role" required>
-        <option value="" disabled selected hidden>Vous êtes ? (Rôle)</option>
-        <option value="etudiant">Étudiant</option>
-        <option value="enseignant">Enseignant</option>
+      
+      <select id="role" name="role" required>
+          <option value="" disabled selected hidden>Rôle</option>
+          <option value="etudiant">Étudiant</option>
+          <option value="enseignant">Enseignant</option>
       </select>
-
-      <input type="password" name="password" placeholder="Mot de passe" required>
       
       <button type="submit" class="submit-btn">S'inscrire</button>
     </form>
+
+    <!-- Formulaire de connexion -->
+    <form id="loginForm">
+      <input id="login-email" name="email" type="email" placeholder="Email" required>
+      <input id="login-password" name="password" type="password" placeholder="Mot de passe" required>
+      <button type="submit" class="submit-btn">Se connecter</button>
+    </form>
+
   </div>
 
+  <!-- Ton fichier JS externe -->
+  <script src="app.js"></script>
+
+  <!-- Ton code JS interne pour l'animation des formulaires -->
   <script>
-    function showForm(formType) {
-      const formLogin = document.getElementById('form-login');
-      const formRegister = document.getElementById('form-register');
-      const btnConnexion = document.getElementById('btn-connexion');
-      const btnInscription = document.getElementById('btn-inscription');
+    document.addEventListener("DOMContentLoaded", function () {
+        const registerForm = document.getElementById("registerForm");
+        const loginForm = document.getElementById("loginForm");
+        const btnInscription = document.getElementById("btn-inscription");
+        const btnConnexion = document.getElementById("btn-connexion");
+        const startNowBtn = document.getElementById("start-now");
+        const toggleButtons = document.getElementById("toggle-buttons");
+        const container = document.getElementById("register-login");
 
-      if (formType === 'login') {
-        formLogin.classList.add('active');
-        formRegister.classList.remove('active');
-        btnConnexion.classList.add('active');
-        btnInscription.classList.remove('active');
-      } else {
-        formLogin.classList.remove('active');
-        formRegister.classList.add('active');
-        btnConnexion.classList.remove('active');
-        btnInscription.classList.add('active');
-      }
-    }
+        registerForm.style.display = "none";
+        loginForm.style.display = "none";
+
+        startNowBtn.addEventListener("click", function () {
+            toggleButtons.style.display = "block";
+            container.style.display = "block";
+            btnInscription.click();
+            window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+        });
+
+        btnInscription.addEventListener("click", function (e) {
+            e.preventDefault();
+            registerForm.style.display = "flex";
+            loginForm.style.display = "none";
+            
+            // Pour le style du bouton actif
+            btnInscription.classList.add("active");
+            btnConnexion.classList.remove("active");
+        });
+
+        btnConnexion.addEventListener("click", function (e) {
+            e.preventDefault();
+            loginForm.style.display = "flex";
+            registerForm.style.display = "none";
+            
+            // Pour le style du bouton actif
+            btnConnexion.classList.add("active");
+            btnInscription.classList.remove("active");
+        });
+    });
   </script>
-
 </body>
 </html>

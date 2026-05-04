@@ -4,157 +4,178 @@
   <meta charset="UTF-8">
   <title>ExaWeb - Espace Enseignant</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
+    /* =========================================
+       STYLE: BLACK, YELLOW & GRID (LIGHT)
+       ========================================= */
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #05050a;
-        background-image: radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.15), transparent 50%),
-                          radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.15), transparent 50%);
-        color: #fff;
+        background-color: #fafafa;
+        background-image: 
+            linear-gradient(to right, rgba(17, 17, 17, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(17, 17, 17, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        color: #111111;
         margin: 0;
         padding: 0;
         min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    @keyframes antigravity {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
-        100% { transform: translateY(0px); }
+    body::before, body::after {
+        content: '';
+        position: fixed;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        z-index: -1;
+        filter: blur(120px);
+        opacity: 0.4;
+        animation: orbMove 15s infinite alternate ease-in-out;
     }
 
-    @keyframes textTrain {
-        0% { background-position: 0% center; }
-        100% { background-position: 200% center; }
+    body::before {
+        background: #ffcc00;
+        top: -150px;
+        left: -150px;
     }
 
-    @keyframes neonPulse {
-        0% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
-        50% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0, 255, 255, 0.2); }
-        100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1); }
+    body::after {
+        background: #ff0055;
+        bottom: -150px;
+        right: -100px;
+        animation-delay: -7s;
+        animation-duration: 20s;
     }
 
+    @keyframes orbMove {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(150px, 100px) scale(1.2); }
+        100% { transform: translate(-50px, 150px) scale(0.9); }
+    }
+
+    /* الكارطة الزجاجية بالستيل الجديد */
     .glass-card {
-        background: rgba(20, 20, 25, 0.7);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 2px solid #111111;
         border-radius: 24px;
         padding: 40px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(0, 255, 255, 0.1);
-        animation: antigravity 7s infinite ease-in-out;
-        transition: all 0.4s ease;
+        box-shadow: 10px 10px 0px #111111;
         width: 100%;
         max-width: 48rem;
-    }
-
-    .glass-card:hover {
-        animation-play-state: paused;
-        transform: translateY(-5px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(188, 19, 254, 0.3);
+        transition: transform 0.3s ease;
+        position: relative;
+        z-index: 10;
+        margin: 40px 0;
     }
 
     .cyber-title {
-        font-size: 2em;
+        font-size: 2.2em;
         margin-bottom: 20px;
-        background: linear-gradient(90deg, #00ffff, #bc13fe, #ffffff, #bc13fe, #00ffff);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: textTrain 3s linear infinite;
+        color: #111111;
+        text-transform: uppercase;
         letter-spacing: 1px;
         text-align: center;
-        font-weight: bold;
+        font-weight: 900;
     }
 
     .cyber-input, .cyber-select {
         width: 100%;
-        padding: 14px;
+        padding: 16px;
         margin-bottom: 16px;
         border-radius: 12px;
-        background: rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: #fff;
-        font-size: 1em;
+        background: #f8fafc;
+        border: 2px solid #cbd5e1;
+        color: #111111;
+        font-size: 1.05em;
         transition: all 0.3s ease;
         box-sizing: border-box;
+        font-weight: 500;
     }
 
     .cyber-input::placeholder {
-        color: rgba(255, 255, 255, 0.3);
+        color: #94a3b8;
     }
 
     .cyber-input:focus, .cyber-select:focus {
         outline: none;
-        border-color: transparent;
-        background: rgba(0, 0, 0, 0.7);
-        box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.5), 0 0 15px rgba(0, 255, 255, 0.2);
-    }
-
-    .cyber-select option {
-        background: #0a0a0f;
-        color: #fff;
+        border-color: #111111;
+        background: #ffffff;
+        box-shadow: 4px 4px 0px #ffcc00;
     }
 
     .cyber-btn {
-        background: transparent;
-        color: #00ffff;
-        border: 1px solid #00ffff;
-        font-weight: 600;
+        background: #111111;
+        color: #ffcc00;
+        border: 2px solid #111111;
+        font-weight: 800;
         font-size: 1.1em;
-        padding: 12px 25px;
-        border-radius: 50px;
+        padding: 16px 25px;
+        border-radius: 12px;
         cursor: pointer;
-        transition: all 0.4s ease;
+        transition: all 0.3s ease;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
         width: 100%;
-        animation: neonPulse 2.5s infinite;
+        box-shadow: 4px 4px 0px #ffcc00;
     }
 
     .cyber-btn:hover:not(:disabled) {
-        background: #00ffff;
-        color: #000;
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-        transform: translateY(-2px);
+        background: #ffcc00;
+        color: #111111;
+        box-shadow: 6px 6px 0px #111111;
+        transform: translate(-2px, -2px);
     }
 
     .cyber-btn:disabled {
-        opacity: 0.4;
+        opacity: 0.5;
         cursor: not-allowed;
-        animation: none;
-        border-color: #555;
-        color: #555;
+        box-shadow: none;
+        transform: none;
+        background: #e2e8f0;
+        color: #94a3b8;
+        border-color: #cbd5e1;
     }
 
     .cyber-btn-add {
-        border-color: #bc13fe;
-        color: #bc13fe;
-        animation: none;
+        background: #ffcc00;
+        color: #111111;
+        box-shadow: 4px 4px 0px #111111;
     }
 
-    .cyber-btn-add:hover {
-        background: #bc13fe;
-        color: #fff;
-        box-shadow: 0 0 20px rgba(188, 19, 254, 0.6);
+    .cyber-btn-add:hover:not(:disabled) {
+        background: #111111;
+        color: #ffcc00;
+        box-shadow: 6px 6px 0px #ffcc00;
     }
 
     .code-display {
-        font-size: 3em;
+        font-size: 2.5em;
         font-family: 'Courier New', Courier, monospace;
-        color: #00ffff;
-        text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        color: #111111;
+        background: #ffcc00;
+        padding: 10px 30px;
+        border-radius: 12px;
+        border: 2px solid #111111;
+        display: inline-block;
         letter-spacing: 6px;
         margin: 15px 0;
+        box-shadow: 6px 6px 0px #111111;
+        font-weight: 900;
     }
 
     .neon-divider {
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
-        margin: 30px 0;
+        height: 2px;
+        background: #111111;
+        margin: 40px 0;
         border: none;
+        opacity: 0.1;
     }
   </style>
 </head>
@@ -164,25 +185,25 @@
     <div class="glass-card">
       
       <div id="section-creation" class="text-center">
-        <h1 class="cyber-title">GÉNÉRATEUR D'EXAMEN</h1>
+        <h1 class="cyber-title"><i class="fa-solid fa-gear"></i> GÉNÉRATEUR D'EXAMEN</h1>
         <input type="text" id="titre-examen" placeholder="Titre de l'examen (ex: Programmation S5)" class="cyber-input text-center text-lg">
         <button onclick="creerExamen()" class="cyber-btn mt-2">
           Générer le Code Sécurisé
         </button>
 
         <div id="resultat" class="mt-8 hidden">
-          <p class="text-gray-400 uppercase tracking-widest text-sm">Clé d'accès générée :</p>
-          <h2 id="code-affiche" class="code-display font-bold font-mono uppercase"></h2>
-          <p class="text-sm text-purple-400 mb-2 tracking-wide">Transmettez cette clé aux étudiants pour l'accès.</p>
+          <p class="text-gray-600 font-bold uppercase tracking-widest text-sm">Clé d'accès générée :</p>
+          <h2 id="code-affiche" class="code-display uppercase"></h2>
+          <p class="text-sm text-gray-800 font-bold mb-2 tracking-wide">Transmettez cette clé aux étudiants pour l'accès.</p>
         </div>
       </div>
 
       <hr class="neon-divider">
 
       <div id="section-questions" class="hidden">
-        <h2 class="cyber-title" style="font-size: 1.5em; background-image: linear-gradient(90deg, #bc13fe, #00ffff);">Base de Données des Questions</h2>
+        <h2 class="cyber-title" style="font-size: 1.5em;"><i class="fa-solid fa-database"></i> Base de Données des Questions</h2>
         
-        <input type="text" id="texte-question" placeholder="Saisir la question ici..." class="cyber-input font-semibold">
+        <input type="text" id="texte-question" placeholder="Saisir la question ici..." class="cyber-input font-semibold text-lg">
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
           <input type="text" id="choix1" placeholder="Option A" class="cyber-input mb-0">
@@ -191,9 +212,10 @@
           <input type="text" id="choix4" placeholder="Option D" class="cyber-input mb-0">
         </div>
 
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mt-6 mb-6 p-4 rounded-xl" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(188,19,254,0.2);">
-          <label class="font-semibold text-gray-300 tracking-wide">Définir la réponse correcte :</label>
-          <select id="reponse-correcte" class="cyber-select w-full md:w-1/2 mb-0">
+        <!-- بدلت غير الألوان باش توالم الابيض والاصفر -->
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mt-6 mb-6 p-4 rounded-xl" style="background: #f8fafc; border: 2px dashed #111111;">
+          <label class="font-bold text-gray-800 tracking-wide">Définir la réponse correcte :</label>
+          <select id="reponse-correcte" class="cyber-select w-full md:w-1/2 mb-0 border-2 border-black">
             <option value="1">Option A</option>
             <option value="2">Option B</option>
             <option value="3">Option C</option>
@@ -205,12 +227,13 @@
           Insérer la question au système
         </button>
 
-        <p id="msg-succes" class="text-green-400 font-bold mt-6 text-center tracking-wider hidden drop-shadow-[0_0_8px_rgba(74,222,128,0.6)]">Données enregistrées avec succès !</p>
+        <p id="msg-succes" class="text-green-600 font-bold mt-6 text-center tracking-wider hidden border-2 border-green-600 bg-green-100 p-2 rounded-lg">✓ Données enregistrées avec succès !</p>
       </div>
 
     </div>
   </div>
 
+  <!-- السكريبت ديالك كيفما هو ماقستوش 100% -->
   <script>
     let currentExamId = null;
 
